@@ -11,6 +11,7 @@ from google.appengine.api import users
 from google.appengine.api import app_identity
 from google.appengine.api import mail
 import random
+import os
 
 from flask import Flask, render_template, abort, redirect, url_for, request, make_response
 from werkzeug import secure_filename
@@ -33,16 +34,24 @@ def home():
 	user.attemptAutoGroupAccess()
 	starturl = '/start/'
 	personsurl = '/persons/'
+	
+	if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+		env = 'production'
+	else:
+		env = 'local'
+
 	if user.groupaccess != None:
 		starturl += user.groupaccess.urlsafe() + '/'
 		personsurl += user.groupaccess.urlsafe() + '/'
+	
 	return render_template('start.html',
 						   heading='Hem',
 						   items=[],
 						   breadcrumbs=breadcrumbs,
 						   user=user,
 						   starturl=starturl,
-						   personsurl=personsurl
+						   personsurl=personsurl,
+						   env=env
 						   )
 
 @app.route('/start')
