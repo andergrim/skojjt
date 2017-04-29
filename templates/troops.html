@@ -26,13 +26,4 @@
 <a href="{{groupsummarylink}}"><span class="glyphicon glyphicon-list-alt"></span> Föreningsredovisning</a>
 </div>
 {% endif %}
-<script>
-function changeSemester(x)
-{
-	if (window.confirm("Vill du byta termin?"))
-	{
-		location.href = "?action=setsemester&semester=" + x.options[x.selectedIndex].value;
-	}
-}
-</script>
 {% endblock %}
