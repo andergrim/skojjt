@@ -22,19 +22,18 @@ app.debug = True
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
 
-
 reload(sys)
 sys.setdefaultencoding('utf8')
-
 
 @app.route('/')
 def home():
 	breadcrumbs = [{'link':'/', 'text':'Hem'}]
-	user=UserPrefs.current()
+	user = UserPrefs.current()
 	user.attemptAutoGroupAccess()
 	starturl = '/start/'
 	personsurl = '/persons/'
-	
+	logouturl = users.create_logout_url('/')
+
 	if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
 		env = 'production'
 	else:
@@ -45,12 +44,13 @@ def home():
 		personsurl += user.groupaccess.urlsafe() + '/'
 	
 	return render_template('start.html',
-						   heading='Hem',
-						   items=[],
-						   breadcrumbs=breadcrumbs,
-						   user=user,
-						   starturl=starturl,
-						   personsurl=personsurl,
+						   heading = 'Hem',
+						   items = [],
+						   breadcrumbs = breadcrumbs,
+						   user = user,
+						   starturl = starturl,
+						   personsurl = personsurl,
+						   logouturl = logouturl,
 						   env=env
 						   )
 
@@ -62,6 +62,7 @@ def home():
 @app.route('/start/<sgroup_url>/<troop_url>/', methods = ['POST', 'GET'])
 @app.route('/start/<sgroup_url>/<troop_url>/<key_url>', methods = ['POST', 'GET'])
 @app.route('/start/<sgroup_url>/<troop_url>/<key_url>/', methods = ['POST', 'GET'])
+
 def start(sgroup_url=None, troop_url=None, key_url=None):
 	user = UserPrefs.current()
 	if not user.hasAccess():
@@ -73,14 +74,14 @@ def start(sgroup_url=None, troop_url=None, key_url=None):
 	baselink='/start/'
 
 	scoutgroup = None
-	if sgroup_url!=None:
+	if sgroup_url != None:
 		sgroup_key = ndb.Key(urlsafe=sgroup_url)
 		scoutgroup = sgroup_key.get()
 		baselink+=sgroup_url+"/"
 		breadcrumbs.append({'link':baselink, 'text':scoutgroup.getname()})
 
 	troop = None
-	if troop_url!=None:
+	if troop_url != None:
 		baselink+=troop_url+"/"
 		troop_key = ndb.Key(urlsafe=troop_url)
 		troop = troop_key.get()
