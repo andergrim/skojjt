@@ -746,7 +746,13 @@ def import_():
 	groupid = request.form.get('groupid').strip()
 	semester=ndb.Key(urlsafe=request.form.get('semester')).get()
 	result = RunScoutnetImport(groupid, api_key, user, semester)
-	return render_template('table.html', items=result, tabletitle="Importresultat", rowtitle='Result', breadcrumbs=breadcrumbs, env=env, session=session)
+	return render_template('importresulttable.html', 
+							items = result, 
+							tabletitle = "Importresultat", 
+							rowtitle = 'Resultatlogg', 
+							breadcrumbs = breadcrumbs, 
+							env = env, 
+							session = session)
 
 
 @app.route('/admin')
