@@ -22,6 +22,10 @@ handlers:
   static_files: img/favicon.ico
   upload: img/favicon.ico
 
+- url: /manifest.json
+  static_files: manifest.json
+  upload: manifest.json
+
 - url: /css
   static_dir: css
 
