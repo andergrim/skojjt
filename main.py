@@ -77,12 +77,12 @@ def start(sgroup_url=None, troop_url=None, key_url=None):
 	if sgroup_url != None:
 		sgroup_key = ndb.Key(urlsafe=sgroup_url)
 		scoutgroup = sgroup_key.get()
-		baselink+=sgroup_url+"/"
+		baselink += sgroup_url+"/"
 		breadcrumbs.append({'link':baselink, 'text':scoutgroup.getname()})
 
 	troop = None
 	if troop_url != None:
-		baselink+=troop_url+"/"
+		baselink += troop_url+"/"
 		troop_key = ndb.Key(urlsafe=troop_url)
 		troop = troop_key.get()
 		breadcrumbs.append({'link':baselink, 'text':troop.getname()})
@@ -118,7 +118,7 @@ def start(sgroup_url=None, troop_url=None, key_url=None):
 			baselink=breadcrumbs[-1]["link"]
 		else:
 			form = htmlform.HtmlForm('deletetroop', submittext="Radera", buttonType="btn-danger", 
-				descriptionText=u"Vill du verkligen radera avdelningen och all registrerad närvaro?\nDet går här inte att ångra.")
+				descriptionText = u"Vill du verkligen radera avdelningen och all registrerad närvaro?\nDet går här inte att ångra.")
 			form.AddField('confirm', '', '', 'hidden')
 			return render_template('form.html',
 				heading=section_title,

@@ -1,29 +1,50 @@
 {% extends "layout.html" %}
 {% block main %}
-<h1 class="page-header">{{heading}}</h1>
-<label for="semester" class="control-label col-sm-3">Termin:</label>
-<select class="form-control form-control-lg" name="semester" id="semester" onchange="changeSemester(this)">
-{% for semester in semesters %}
-	<option value="{{semester.key.urlsafe()}}" {% if user.activeSemester==semester.key %}selected=""{% endif %}>{{semester.getname()}}</option>
-{% endfor %}
-</select><br/>
-<div class="table-responsive">
-	<table id="maintable" class="table table-striped">
-	  <thead><tr><th class="col-xs-4 col-sm-2 col-lg-1">Namn</th></tr></thead>
-	  <tbody>
-		{% for troop in troops %}
-		<tr><td><a href="{{baselink+troop.key.urlsafe()}}/">{{ troop.getname() }}</a></td></tr>
-		{% endfor %}
-	  </tbody>
-	</table>
+<h2>{{heading}}</h2>
+
+<div class="row">
+	<div class="form-group col-xs-12 col-sm-8 col-md-4">
+		<label for="semester">Termin</label>
+		<select class="form-control" name="semester" id="semester" onchange="changeSemester(this)">
+			{% for semester in semesters %}
+			<option value="{{semester.key.urlsafe()}}" {% if user.activeSemester==semester.key %}selected=""{% endif %}>{{semester.getname()}}</option>
+			{% endfor %}
+		</select>
+	</div>
 </div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-8 col-md-4">
+		<label for="troop-list">
+			Avdelning
+		</label>
+		<div class="list-group" id="troop-list">
+			{% for troop in troops %}
+			<a href="{{baselink+troop.key.urlsafe()}}/" class="list-group-item">
+				{{ troop.getname() }}
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
 {% if user.canImport() %}
-<hr/>
-<div class="well">
-<a href="{{scoutgroupinfolink}}"><span class="glyphicon glyphicon-cog"></span> Kårinformation</a>
-</div>
-<div class="well">
-<a href="{{groupsummarylink}}"><span class="glyphicon glyphicon-list-alt"></span> Föreningsredovisning</a>
+<div class="row">
+	<div class="col-xs-12 col-sm-8 col-md-4">
+		<a href="{{scoutgroupinfolink}}" class="btn btn-default btn-lg btn-block">
+			<span class="pull-left">
+				<span class="glyphicon glyphicon-cog"></span>
+				Kårinformation
+			</span>&nbsp;
+		</a>
+
+		<a href="{{groupsummarylink}}" class="btn btn-default btn-lg btn-block">
+			<span class="pull-left">
+				<span class="glyphicon glyphicon-list-alt"></span>
+				Föreningsredovisning
+			</span>&nbsp;
+		</a>
+	</div>
 </div>
 {% endif %}
 {% endblock %}

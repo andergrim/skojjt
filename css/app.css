@@ -20,11 +20,15 @@ div.main {
   padding-top: 6px;
 }
 
-.page-header{
-  margin: 10px 0 10px;
+h2 {
+  margin-top: 0px;
 }
 
 /* Tables */
+div.table-responsive {
+  border: 0px;
+}
+
 th.rotate {
   height: 80px;
   width: 80px;
@@ -50,8 +54,7 @@ th.rotate > div > span {
 margin-bottom: 5px;
 }*/
 
-.big-checkbox 
-{
+.big-checkbox {
 width: 24px; height: 24px;
 }
 /*.heading
@@ -60,8 +63,7 @@ width: 24px; height: 24px;
 	font-size: 36px;
     font-weight: bold;
 }*/
-.troopnames
-{
+.troopnames {
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
