@@ -794,6 +794,7 @@ def adminaccess(userprefs_url=None):
 				sgroup_key = ndb.Key(urlsafe=request.form.get('groupaccess'))
 			userprefs.groupaccess = sgroup_key
 			userprefs.put()
+			return redirect_with_message('/admin/access/', "Användare "+userprefs.getname()+" sparad.")
 		else:
 			section_title = userprefs.getname()
 			baselink += userprefs_url + '/' 
@@ -909,7 +910,7 @@ def setcurrentsemester():
 		u.activeSemester = semester.key
 		u.put()
 
-	return redirect('/admin/')
+	return redirect_with_message('/admin/', 'Aktiv termin är nu ' + semester.getname())
 	
 @app.route('/admin/autoGroupAccess')
 def autoGroupAccess():

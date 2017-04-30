@@ -1,20 +1,48 @@
 {% include "header.html" %}
 <body>
 {% include "navigation.html" %}
-	<div class="main">
-		<div class="jumbotron">
-			<div class="btn-toolbar">
-				<a href="/admin/access/" class="btn btn-lg btn-default">Access</a>
-			</div>
-			<div class="btn-toolbar">
-				<a href="/import/" class="btn btn-lg btn-default">Importera från scoutnet</a>
-			</div>
-			<div class="btn-toolbar">
-				<a href="/admin/setcurrentsemester" class="btn btn-lg btn-default">Byt till ny termin för alla användare</a>
-			</div>
-			<div class="btn-toolbar">
-				<a href="/admin/backup/" class="btn btn-lg btn-default">Backup xml</a>
-			</div>
+	<div class="main" id="page-admin">
+		<div class="container-fluid">
+			{% include "messagealert.html" %}
+			<div class="row">
+				<div class="col-xs-1 col-sm-3 col-md-4"><!-- left margin --></div>
+				<div class="col-xs-10 col-sm-6 col-md-4">
+					
+					<h2>Administration</h2>					
+					
+					<a href="/admin/access/" class="btn btn-lg btn-block btn-default">
+						<span class="pull-left">
+							<span class="glyphicon glyphicon-lock"></span> 
+							Behörighet
+						</span>&nbsp;
+					</a>
+
+					<a href="/import/" class="btn btn-lg btn-block btn-default">
+						<span class="pull-left">
+							<span class="glyphicon glyphicon-import"></span> 
+							Importera från Scoutnet
+						</span>&nbsp;
+					</a>
+
+					<a href="/admin/setcurrentsemester" class="btn btn-lg btn-block btn-default">
+						<span class="pull-left">
+							<span class="glyphicon glyphicon-calendar"></span> 
+							Byt till ny termin
+						</span>&nbsp;
+					</a>
+
+					<a href="/admin/backup/" class="btn btn-lg btn-block btn-default">
+						<span class="pull-left">
+							<span class="glyphicon glyphicon-download-alt"></span> 
+							Backup XML
+						</span>&nbsp;
+					</a>
+
+				</div><!-- /content column -->
+
+				<div class="col-xs-1 col-sm-3 col-md-4"><!-- right margin --></div>
+
+			</div><!-- /row -->
 		</div>
 	</div>
 </body>
