@@ -558,17 +558,21 @@ def persons(sgroup_url=None, person_url=None, action=None):
 @app.route('/scoutgroupinfo/<sgroup_url>/', methods = ['POST', 'GET'])
 def scoutgroupinfo(sgroup_url):
 	user = UserPrefs.current()
+	
 	if not user.canImport():
 		return "denied", 403
+	
 	breadcrumbs = [{'link':'/', 'text':'Hem'}]
 	baselink = "/scoutgroupinfo/"
 	section_title = "Kårinformation"
 	scoutgroup = None
-	if sgroup_url!=None:
+	
+	if sgroup_url != None:
 		sgroup_key = ndb.Key(urlsafe=sgroup_url)
 		scoutgroup = sgroup_key.get()
 		baselink += sgroup_url+"/"
 		breadcrumbs.append({'link':baselink, 'text':scoutgroup.getname()})
+	
 	if request.method == "POST":
 		logging.info("POST, %s" % str(request.form))
 		scoutgroup.organisationsnummer = request.form['organisationsnummer'].strip()
@@ -578,18 +582,25 @@ def scoutgroupinfo(sgroup_url):
 		scoutgroup.apikey_waitinglist = request.form['apikey_waitinglist'].strip()
 		scoutgroup.apikey_all_members = request.form['apikey_all_members'].strip()
 		scoutgroup.put()
-		logging.info("Done, redirect to: %s", breadcrumbs[-1]['link'])
+		logging.info("Done, redirect to: %s", breadcrumbs[-1]['link'] + '?saved=1')
+		
 		if "import" in request.form:
 			result = RunScoutnetImport(scoutgroup.scoutnetID, scoutgroup.apikey_all_members, user, Semester.getOrCreateCurrent())
 			return render_template('table.html', tabletitle="Importresultat", items=result, rowtitle='Result', breadcrumbs=breadcrumbs)
 		else:
-			return redirect(breadcrumbs[-1]['link'])
+			return redirect(breadcrumbs[-1]['link'] + '?saved=1')
 	else:
+		if request.args.get('saved') == '1':
+			message = 'Inställningarna har sparats'
+		else:
+			message = None
+
 		return render_template('scoutgroupinfo.html',
-			heading=section_title,
-			baselink=baselink,
-			scoutgroup=scoutgroup,
-			breadcrumbs=breadcrumbs)
+			heading = section_title,
+			message = message,
+			baselink = baselink,
+			scoutgroup = scoutgroup,
+			breadcrumbs = breadcrumbs)
 			
 
 @app.route('/groupsummary/<sgroup_url>')
