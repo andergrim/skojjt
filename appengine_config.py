@@ -12,5 +12,5 @@ from gaesessions import SessionMiddleware
 vendor.add('lib')
 
 def webapp_add_wsgi_middleware(app):
-   app = SessionMiddleware(app, cookie_key = "CHANGE ME!kB56T7Rk2c..W=l3G3i=kK")
+   app = SessionMiddleware(app, cookie_key = "CHANGE ME!kB56T7Rk2c..W=l3G3i=kK", no_datastore = True)
    return app

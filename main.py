@@ -7,7 +7,7 @@ import json
 import scoutnet
 import htmlform
 from dakdata import *
-from gaesessions import get_current_session
+from gaesessions import get_current_session, delete_expired_sessions
 from google.appengine.api import users
 from google.appengine.api import app_identity
 from google.appengine.api import mail
@@ -947,7 +947,14 @@ def dobackup():
 	thisdate = datetime.datetime.now()
 	response.headers['Content-Disposition'] = 'attachment; filename=skojjt-backup-' + str(thisdate.isoformat()) + '.xml'
 	return response
-	
+
+@app.route('/admin/cleanup_sessions')
+def cleanup_sessions():
+	while not delete_expired_sessions():
+		pass
+
+	return "ok", 200
+
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('notfound.html'), 404
