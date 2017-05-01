@@ -15,7 +15,7 @@
   border: 1px solid transparent;
 }
 
-/* Pages */
+/* Page layouts */
 div.main {
   padding-top: 6px;
 }
@@ -49,17 +49,14 @@ th.rotate > div > span {
 }
 
 /* Buttons and other elements */
+.btn {
+  border-radius: 2px;
+}
 
-/*.btn-lg{
-margin-bottom: 5px;
-}*/
+input.form-control {
+  border-radius: 2px;
+}
 
-/*.heading
-{ 
-    display: block;
-	font-size: 36px;
-    font-weight: bold;
-}*/
 .troopnames {
     max-width: 200px;
     overflow: hidden;
