@@ -1,21 +1,16 @@
 ﻿{% extends "layout.html" %}
 {% block main %}
-<h1 class="page-header">{{heading}}</h1>
-Du kan lägga och ta bort till användare till din kår. Du kan bara ändra användare som inte har någon kår, eller som är med i din egen kår.
-Användare som du lägger till kan rapportera närvaro i din kår.
-<div class="table-responsive">
-	<table id="maintable" class="table table-striped">
-	  <thead>
-		<tr>
-		  <th class="col-xs-2 col-sm-2 col-lg-2">Namn</th>
-		  <th class="col-xs-2 col-sm-2 col-lg-2">Email</th>
-		  <th class="col-xs-2 col-sm-2 col-lg-2">Access till kår</th>
-		</tr>
-	  </thead>
-	  <tbody>
-		{% for u in users %}
-		<tr><td>{{u.getname()}}</td>
-		<td><a href="mailto:{{u.getemail()}}">{{u.getemail()}}</a></td>
+<h2>{{heading}}</h2>
+<div class="well well-sm">
+	Du kan lägga och ta bort till användare till din kår. Du kan bara ändra användare som inte har någon kår, eller som är med i din egen kår. Användare som du lägger till kan rapportera närvaro i din kår.
+</div>
+
+<div class="list-group col-xs-12 col-sm-8 col-md-6">
+	{% for u in users %}
+	<li class="list-group-item">
+		<h4 class="list-group-item-heading">
+			{{ u.getname() }}
+		</h4>
 		{% set sgroupname = '' %}
 		{% set sgroupurlkey = '' %}
 		{% if u.groupaccess != None %}
@@ -27,11 +22,15 @@ Användare som du lägger till kan rapportera närvaro i din kår.
 				{% set sgroupname = group.getname() %}
 			{% endif %}
 		{% endif %}
-		<td>{%if sgroupname==''%}<a href="./{{u.key.urlsafe()}}?setgroupaccess={{mygroupurl}}" class="btn btn-success">Lägg till i {{mygroupname}}</a>
-		{%else%}<a href="./{{u.key.urlsafe()}}?setgroupaccess=None" class="btn btn-warning">Ta bort ifrån {{mygroupname}}{%endif%}</a></td>
-		</tr>
-		{% endfor %}
-	  </tbody>
-	</table>
+		<span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{u.getemail()}}">{{u.getemail()}}</a>
+		<div class="material-switch pull-right">
+			<input type="checkbox" class="form-control groupaccess" id="check_{{ u.userid }}" 
+				   data-add-url="./{{u.key.urlsafe()}}?setgroupaccess={{mygroupurl}}" 
+				   data-remove-url="./{{u.key.urlsafe()}}?setgroupaccess=None" 
+				   {% if sgroupname != '' %}checked="checked"{% endif %} />
+			<label for="check_{{ u.userid }}" class="label-default"></label>
+		</div>
+	</li>
+	{% endfor %}
 </div>
 {% endblock %}

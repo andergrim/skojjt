@@ -143,6 +143,23 @@ $(document).ready(function() {
 	/***
 	 * Common event handlers
  	 ***/ 
+ 	 $('input.groupaccess').on('change', function(e) {
+ 	 	var check = $(this).attr('checked');
+ 	 	var url = '#';
+
+ 	 	if (check === undefined) {
+ 	 		$(this).attr('checked', 'checked');
+ 	 		url = $(this).data('add-url');
+ 	 	} else {
+ 	 		$(this).removeAttr('checked');
+ 	 		url = $(this).data('remove-url');
+ 	 	}
+
+ 	 	$.get(url, function(data) {
+ 	 		// nothing here... 
+ 	 	});
+ 	 });
+
 	$("#newmeeting").on('shown.bs.collapse', function(e) {
 		$("#mname")[0].focus();
 	});

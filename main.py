@@ -836,10 +836,11 @@ def groupaccess(userprefs_url=None):
 	baselink = '/'
 	breadcrumbs = [{'link':baselink, 'text':section_title}]
 	
-	section_title = u'Kåraccess'
+	section_title = u'Behörighet ' + user.groupaccess.get().getname()
 	baselink += 'groupaccess/'
 	breadcrumbs.append({'link':baselink, 'text':section_title})
 
+	# AJAX call, return empty response.
 	if userprefs_url != None:
 		userprefs = ndb.Key(urlsafe=userprefs_url).get()
 		groupaccessurl = request.args["setgroupaccess"]
@@ -849,9 +850,11 @@ def groupaccess(userprefs_url=None):
 			userprefs.groupaccess = ndb.Key(urlsafe=groupaccessurl)
 			userprefs.hasaccess = True
 		userprefs.put()
+		return "ok", 200
 	
 	users = UserPrefs().query(UserPrefs.groupaccess == None).fetch()
 	users.extend(UserPrefs().query(UserPrefs.groupaccess == user.groupaccess).fetch())
+	
 	return render_template('groupaccess.html',
 		heading = section_title,
 		baselink = baselink,
