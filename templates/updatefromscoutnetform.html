@@ -14,7 +14,7 @@
 	</div>
 	
 	<div class="form-group">
-		<label for="semester" class="form-group">Termin</label>
+		<label for="semester">Termin</label>
 		<select class="form-control form-control-lg" name="semester" id="semester">
 		{% for semester in semesters %}
 			<option value="{{semester.key.urlsafe()}}" {% if user.activeSemester==semester.key %}selected=""{% endif %}>{{semester.getname()}}</option>
@@ -23,11 +23,11 @@
 	</div>
 	
 	<div class="form-group">
-		<input type="submit" class="btn btn-lg btn-default" value="Starta import"></input>
+		<input type="submit" class="btn btn-lg btn-primary" value="Starta import"></input>
 	</div>
 
 	<div class="form-group">
-		<a href="https://github.com/martin-green/skojjt/wiki/Hur-man-importerar-medlemmar-fr%C3%A5n-scoutnet" class="btn btn-info btn-sm">
+		<a href="https://github.com/martin-green/skojjt/wiki/Hur-man-importerar-medlemmar-fr%C3%A5n-scoutnet" class="btn btn-default btn-sm">
 			<span class="glyphicon glyphicon-info-sign"></span> Hur man importerar medlemmar från scoutnet
 		</a>
 	</div>
