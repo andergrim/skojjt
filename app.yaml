@@ -28,6 +28,7 @@ handlers:
   upload: manifest.json
 
 - url: /service-worker.js
+  mime_type: text/javascript
   static_files: service-worker.js
   upload: service-worker.js
 
