@@ -10,6 +10,7 @@ skip_files:
 - ^(.*/)?\.ini$
 - ^(.*/)?\.vscode$
 - ^(.*/)?\.pdf$
+- ^(.*/)?\.less$
 
 default_expiration: "2h"
 
