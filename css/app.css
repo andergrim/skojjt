@@ -56,6 +56,10 @@ th.rotate > div > span {
   padding: 5px 10px;
 }
 
+td.name-field {
+  vertical-align: middle !important;
+}
+
 /* Buttons and other elements */
 .btn {
   border-radius: 2px;
@@ -72,7 +76,7 @@ input.form-control {
     white-space: nowrap;
 }
 
-/* Material checkboxes */
+/* Checkbox switches */
 .material-switch > input[type="checkbox"] {
     display: none;   
 }
@@ -96,6 +100,7 @@ input.form-control {
     transition: all 0.4s ease-in-out;
     width: 40px;
 }
+
 .material-switch > label::after {
     background: rgb(255, 255, 255);
     border-radius: 16px;
@@ -109,6 +114,7 @@ input.form-control {
     transition: all 0.3s ease-in-out;
     width: 24px;
 }
+
 .material-switch > input[type="checkbox"]:checked + label::before {
     background: green;
     opacity: 0.5;
@@ -116,4 +122,73 @@ input.form-control {
 .material-switch > input[type="checkbox"]:checked + label::after {
     background: inherit;
     left: 20px;
+}
+
+/* Larger, touch friendly checkboxes and radio inputs */
+
+/* Remove margin when in table */
+td > div.checkbox {
+  margin: 0;
+}
+
+.checkbox label:after, 
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #003c69;
+    border-radius: .15em;
+    width: 1.8em;
+    height: 1.8em;
+    float: left;
+    margin-right: .1em;
+    margin-top: .1em;
+    background-color: white;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: 1em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+    color: #003c69;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .2s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
 }
