@@ -1,15 +1,17 @@
 <nav class="navbar navbar-default">
-	{% if breadcrumbs|length > 1 %}
-		{% set backlink = breadcrumbs[breadcrumbs|length - 2] %}
-		<a href="{{backlink['link']}}" class="btn btn-sm btn-default navbar-btn backbutton">
-			<span class="glyphicon glyphicon-chevron-left"></span>
-		</a>
-	{% endif %}
-	<ol class="breadcrumb pull-right">
+	<ol class="breadcrumb">
+		{% if breadcrumbs|length > 1 %}
+			{% set backlink = breadcrumbs[breadcrumbs|length - 2] %}
+			<a href="{{backlink['link']}}" class="btn btn-sm btn-default navbar-btn backbutton">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a>
+		{% endif %}
+		
 		{% for bc in breadcrumbs %}
 		<li class="breadcrumb-item">
 			<a href="{{bc['link']}}">{{bc['text']}}</a>
 		</li>
 		{% endfor %}
+		
 	</ol>
 </nav>

@@ -6,6 +6,9 @@
 .breadcrumb {
   margin-bottom: 0;
   background-color: #f8f8f8;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .navbar {
@@ -14,10 +17,10 @@
 }
 
 .backbutton {
-  margin-top: 3px !important;
+  margin-top: 0 !important;
   margin-bottom: 0 !important;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 0;
+  margin-right: 6px;
 }
 
 /* Page layouts */
