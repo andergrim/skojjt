@@ -4,15 +4,20 @@
 }
 
 .breadcrumb {
-  padding: 8px 15px;
-  margin-bottom: 6px;
+  margin-bottom: 0;
+  background-color: #f8f8f8;
 }
 
 .navbar {
-  position: relative;
-  min-height: 40px;
-  margin-bottom: 5px;
-  border: 1px solid transparent;
+  margin-bottom: 0;
+  min-height: 20px;
+}
+
+.backbutton {
+  margin-top: 3px !important;
+  margin-bottom: 0 !important;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* Page layouts */
