@@ -618,7 +618,7 @@ def scoutgroupinfo(sgroup_url):
 			result = RunScoutnetImport(scoutgroup.scoutnetID, scoutgroup.apikey_all_members, user, Semester.getOrCreateCurrent())
 			return render_template('table.html', tabletitle="Importresultat", items=result, rowtitle='Result', breadcrumbs=breadcrumbs,env=env,session=session)
 		else:
-			return redirect_with_message(breadcrumbs[-1]['link'], 'Inställningarna har sparats.')
+			return redirect_with_message(breadcrumbs[-1]['link'], 'Inställningarna har sparats.', 'success')
 	else:
 		return render_template('scoutgroupinfo.html',
 			heading = section_title,
@@ -800,7 +800,7 @@ def adminaccess(userprefs_url=None):
 				sgroup_key = ndb.Key(urlsafe=request.form.get('groupaccess'))
 			userprefs.groupaccess = sgroup_key
 			userprefs.put()
-			return redirect_with_message('/admin/access/', "Användare "+userprefs.getname()+" sparad.")
+			return redirect_with_message('/admin/access/', "Användare "+userprefs.getname()+" sparad.", "success")
 		else:
 			section_title = userprefs.getname()
 			baselink += userprefs_url + '/' 
@@ -836,6 +836,9 @@ def groupaccess(userprefs_url=None):
 	baselink = '/'
 	breadcrumbs = [{'link':baselink, 'text':section_title}]
 	
+	if not user.groupaccess.get().getname():
+		return redirect_with_message('/', u"Ditt användarkonto är inte associerat med någon kår. Kontakta administratören.", "danger")
+
 	section_title = u'Behörighet ' + user.groupaccess.get().getname()
 	baselink += 'groupaccess/'
 	breadcrumbs.append({'link':baselink, 'text':section_title})
@@ -919,7 +922,7 @@ def setcurrentsemester():
 		u.activeSemester = semester.key
 		u.put()
 
-	return redirect_with_message('/admin/', 'Aktiv termin är nu ' + semester.getname())
+	return redirect_with_message('/admin/', 'Aktiv termin är nu ' + semester.getname(), 'success')
 	
 @app.route('/admin/autoGroupAccess')
 def autoGroupAccess():
@@ -968,14 +971,10 @@ def serverError(e):
 	logging.error("Error 500:%s", str(e))
 	return render_template('error.html', error=str(e)), 500
 
-def redirect_with_message(url, message):
+def redirect_with_message(url, message, urgency = 'info'):
 	get_current_session()['message'] = message
+	get_current_session()['message_urgency'] = urgency
 	return redirect(url)
-
-#@app.errorhandler(Exception)
-#def defaultHandler(e):
-#	logging.error("Error:%s", str(e))
-#	return render_template('error.html', error=str(e)), 500
 
 # Custom context processor to clear message in session
 # after it has been displayed in layout.html
@@ -984,5 +983,7 @@ def utility_processor():
 	def clear_message(s):
 		if s.has_key('message'):
 			del s['message']
+		if s.has_key('message_urgency'):
+			del s['message_urgency']
 		return ''
 	return dict(clear_message=clear_message)
