@@ -27,6 +27,10 @@ handlers:
   static_files: manifest.json
   upload: manifest.json
 
+- url: /service-worker.js
+  static_files: service-worker.js
+  upload: service-worker.js
+
 - url: /css
   static_dir: css
 
