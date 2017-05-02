@@ -836,7 +836,7 @@ def groupaccess(userprefs_url=None):
 	baselink = '/'
 	breadcrumbs = [{'link':baselink, 'text':section_title}]
 	
-	if not user.groupaccess.get().getname():
+	if not user.groupaccess:
 		return redirect_with_message('/', u"Ditt användarkonto är inte associerat med någon kår. Kontakta administratören.", "danger")
 
 	section_title = u'Behörighet ' + user.groupaccess.get().getname()
