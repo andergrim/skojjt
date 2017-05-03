@@ -296,6 +296,7 @@ def start(sgroup_url=None, troop_url=None, key_url=None):
 	elif key_url!=None and key_url!="dak":
 		meeting = ndb.Key(urlsafe=key_url).get()
 		section_title = meeting.getname()
+		trooplink = baselink
 		baselink += key_url + "/"
 		breadcrumbs.append({'link':baselink, 'text':section_title})
 
@@ -304,6 +305,7 @@ def start(sgroup_url=None, troop_url=None, key_url=None):
 			baselink = baselink,
 			existingmeeting = meeting,
 			breadcrumbs = breadcrumbs,
+			trooplink = trooplink,
 			env = env, 
 			session = session)
 	else:

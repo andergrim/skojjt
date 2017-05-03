@@ -80,10 +80,8 @@
 	</table>
 </div><!-- /table container -->
 
-<button data-toggle="collapse" data-target="#newmeeting" set-focus="#mname" class="btn btn-info btn-lg togglebutton">Nytt möte</button>
-<div id="newmeeting" class="collapse">
+<button data-toggle="modal" data-target="#modal-meetingform" set-focus="#mname" class="btn">Nytt möte</button>
 {% include "meetingform.html" %}
-</div>
 
 <button data-toggle="collapse" data-target="#newmember" set-focus="#namesearch" class="btn btn-lg btn-info togglebutton">Lägg till person</button>
 <div id="newmember" class="collapse">

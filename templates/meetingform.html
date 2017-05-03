@@ -1,43 +1,75 @@
 {% set hasMeeting = True if existingmeeting is defined else False %}
-<form role="form" name="meeting" method="POST">
+<div class="modal fade" id="modal-meetingform" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{% if hasMeeting %}Redigera möte{% else %}Nytt möte{% endif %}</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" name="meeting" method="POST">
+          {% if hasMeeting %}
+          <input type="hidden" name="action" value="updatemeeting"/>
+          {% else %}
+          <input type="hidden" name="action" value="addmeeting"/>
+          {% endif %}
+
+          <div class="form-group">
+          	<label for="mname">Namn</label>
+          	<input type="text" class="form-control" placeholder="Mötesnamn" name="name" id="mname" value="{% if hasMeeting %}{{existingmeeting.getname()}}{% else %}Möte{% endif %}"/>
+          </div>
+
+          <div class="form-group">
+          	<label for="mdate">Datum</label>
+          	<input type="date" class="form-control" name="date" id="mdate" value="{% if hasMeeting %}{{existingmeeting.getdate()}}{% endif %}"/>
+          </div>
+          
+          <div class="form-group">
+          	<label for="starttime">Starttid</label>
+          	<input type="time" class="form-control" name="starttime" id="starttime" value="{% if hasMeeting %}{{existingmeeting.gettime()}}{% endif %}"/>
+          </div>
+          
+          <div class="form-group">
+          	<label for="mduration">Längd (minuter)</label>
+          	<input type="number" class="form-control" name="duration" id="mduration" value="{% if hasMeeting %}{{existingmeeting.duration}}{% endif %}"/>
+          </div>
+
+          {% if not hasMeeting %}
+          <script>
+          	$("#mdate").val(getTodaysDateString());
+          	$("#starttime").val("{{troop.defaultstarttime}}");
+          	$("#mduration").val("{{troop.defaultduration}}");
+          </script>
+          {% endif %}
+
+          <div class="btn-toolbar">  
+            <button type="submit" name="submit" class="btn btn-lg btn-primary">{% if hasMeeting %}Spara{% else %}Lägg till{% endif %}</button>
+          </div>
+        </form>
+        {% if hasMeeting %}
+        <hr/>
+        <form role="form" name="deletemeeting" method="POST">
+          <input type="hidden" name="action" value="deletemeeting"/>
+          <div class="btn-toolbar">
+          <button type="submit" class="btn btn-lg btn-danger">Ta bort</button>
+          </div>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
 {% if hasMeeting %}
-  <input type="hidden" name="action" value="updatemeeting"/>
-{% else %}
-  <input type="hidden" name="action" value="addmeeting"/>
-{% endif %}
-  <div class="form-group">
-	<label for="mname">Namn</label>
-	<input type="text" class="form-control" placeholder="Mötesnamn" name="name" id="mname" value="{% if hasMeeting %}{{existingmeeting.getname()}}{% else %}Möte{% endif %}"/>
-  </div>
-  <div class="form-group">
-	<label for="mdate">Datum</label>
-	<input type="date" class="form-control" name="date" id="mdate" value="{% if hasMeeting %}{{existingmeeting.getdate()}}{% endif %}"/>
-  </div>
-  <div class="form-group">
-	<label for="starttime">Starttid</label>
-	<input type="time" class="form-control" name="starttime" id="starttime" value="{% if hasMeeting %}{{existingmeeting.gettime()}}{% endif %}"/>
-  </div>
-  <div class="form-group">
-	<label for="mduration">Längd (minuter)</label>
-	<input type="number" class="form-control" name="duration" id="mduration" value="{% if hasMeeting %}{{existingmeeting.duration}}{% endif %}"/>
-  </div>
-  {% if not hasMeeting %}
-  <script>
-	$("#mdate").val(getTodaysDateString());
-	$("#starttime").val("{{troop.defaultstarttime}}");
-	$("#mduration").val("{{troop.defaultduration}}");
-  </script>
-  {% endif %}
-  <div class="btn-toolbar">  
-  <button type="submit" name="submit" class="btn btn-lg btn-primary">{% if hasMeeting %}Spara{% else %}Lägg till{% endif %}</button>
-  </div>
-</form>
-{% if hasMeeting %}
-<hr/>
-<form role="form" name="deletemeeting" method="POST">
-  <input type="hidden" name="action" value="deletemeeting"/>
-  <div class="btn-toolbar">
-  <button type="submit" class="btn btn-lg btn-danger">Ta bort</button>
-  </div>
-</form>
+<!-- Auto open modal since its alone on the page -->
+<script>
+  $(document).ready(function() {
+    $('#modal-meetingform').modal();
+
+    // Go back to troop form if closing the modal.
+    $('#modal-meetingform').on('hidden.bs.modal', function(e) {
+      window.location = "{{ trooplink }}";
+    });
+
+  });
+</script>
 {% endif %}

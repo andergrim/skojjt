@@ -1,6 +1,5 @@
 
 $(document).ready(function() {
-
 	/* Troop page functions */
 	if ($('#page-troop').length > 0) {
 		var maintable = $('#maintable');
