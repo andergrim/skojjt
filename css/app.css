@@ -65,6 +65,10 @@ td.name-field {
   border-radius: 2px;
 }
 
+.row .button-row {
+  margin-bottom: 8px;
+}
+
 input.form-control {
   border-radius: 2px;
 }

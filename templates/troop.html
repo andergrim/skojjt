@@ -80,35 +80,49 @@
 	</table>
 </div><!-- /table container -->
 
-<button data-toggle="modal" data-target="#modal-meetingform" set-focus="#mname" class="btn btn-primary">
-	<span class="glyphicon glyphicon-calendar"></span>
-	Nytt möte
-</button>
-{% include "meetingform.html" %}
+<div class="row">
+	<div class="col-xs-12 col-md-5 button-row">
+		<div class="btn-group" role="group">
+			<button data-toggle="modal" data-target="#modal-meetingform" set-focus="#mname" class="btn btn-primary">
+				<span class="glyphicon glyphicon-calendar"></span>
+				Nytt möte
+			</button>
 
-<button data-toggle="modal" data-target="#modal-usersearch" set-focus="#namesearch" class="btn btn-default">
-	<span class="glyphicon glyphicon-user"></span>
-	Lägg till person
-</button>
-{% include "usersearch.html" %}
+			<button data-toggle="modal" data-target="#modal-usersearch" set-focus="#namesearch" class="btn btn-default">
+				<span class="glyphicon glyphicon-user"></span>
+				Lägg till person
+			</button>
 
-<button data-toggle="modal" data-target="#modal-bidrag" class="btn btn-default">
-	<span class="glyphicon glyphicon-piggy-bank"></span>
-	Bidrag
-</button>
-{% include "bidrag.html" %}
+			<button data-toggle="modal" data-target="#modal-bidrag" class="btn btn-default">
+				<span class="glyphicon glyphicon-piggy-bank"></span>
+				Bidrag
+			</button>
+		</div>
+	</div>
 
-{% if user.isGroupAdmin() %}
-<button data-toggle="modal" data-target="#modal-settings" class="btn btn-default">
-	<span class="glyphicon glyphicon-cog"></span>
-	Inställningar
-</button>
-{% include "troopsettings.html" %}
+	{% if user.isGroupAdmin() %}
+	<div class="col-xs-12 col-md-4 button-row">
+		<div class="btn-group" role="group">
+			<button data-toggle="modal" data-target="#modal-settings" class="btn btn-default">
+				<span class="glyphicon glyphicon-cog"></span>
+				Inställningar
+			</button>
 
-<button data-toggle="collapse" data-target="#report" set-focus="#daklink" class="btn btn-lg btn-info togglebutton">Närvarorapport</button>
-<div id="report" class="collapse well">
-	<a id="daklink" href="./dak">Rapportfil för Göteborgs Kommun</a>
+			<button data-toggle="modal" data-target="#modal-report" class="btn btn-default">
+				<span class="glyphicon glyphicon-list-alt"></span>
+				Närvarorapport
+			</button>
+		</div>
+	</div>
+	{% endif %}
 </div>
+
+{% include "meetingform.html" %}
+{% include "usersearch.html" %}
+{% include "bidrag.html" %}
+{% if user.isGroupAdmin() %}
+	{% include "troopsettings.html" %}
+	{% include "report.html" %}
 {% endif %}
 
 {% endblock %}
