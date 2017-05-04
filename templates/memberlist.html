@@ -27,12 +27,18 @@
 				<tbody>
 					{% for item in items[0] %}
 					{% set first_letter = item.firstname[0] %}
-					<tr>
+					<tr class="{% if item.troop == None %}danger{% elif item.notInScoutnet %}warning{% endif %}">
 						<td>
 							<a {% if first_letter != last_letter %}id="letter_{{ first_letter }}"{% endif %}
 							   href="{{baselink+item.key.urlsafe()}}/">
 								{{ item.getname() }}
 							</a>
+							{% if item.troop == None %}
+							&nbsp;<span class="label label-primary">Saknar avdelning</span>
+							{% endif %}
+							{% if item.notInScoutnet %}
+							&nbsp;<span class="label label-primary">Ej i Scoutnet</span>
+							{% endif %}
 						</td>
 					</tr>
 					{% set last_letter = item.firstname[0] %}
