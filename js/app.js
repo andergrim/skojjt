@@ -69,7 +69,7 @@ $(document).ready(function() {
 			$(".saveinfo").text("Klicka för att spara:");
 		});
 
-		$('#namesearch').on('keyup', function() {
+		$('#namesearch').on('keyup propertychange', function() {
 			var val = $('#namesearch').val();
 
 			if (val && val.length > 1) {
@@ -79,11 +79,11 @@ $(document).ready(function() {
 					data: 'action=lookupperson&name=' + val,
 					async: true,
 					success: function(data, textStatus, jqXHR) {
-						arr = JSON.parse(data);
+						var arr = JSON.parse(data);
 						t = '';
 						
 						$('#tblSearchResults').remove();
-						table = $('<table id="tblSearchResults" class="table table-striped"/>');
+						var table = $('<table id="tblSearchResults" class="table table-striped"/>');
 						
 						for (var x in arr) {
 							table.append($('<tr><td><a href="' + arr[x].url + '?action=addperson"> + ' + arr[x].name + '</a></td></tr>'));
@@ -142,7 +142,18 @@ $(document).ready(function() {
 	/***
 	 * Common event handlers
  	 ***/ 
- 	 $('input.groupaccess').on('change', function(e) {
+ 	$('.has-clear input[type="text"]').on('input propertychange', function() {
+  		var $this = $(this);
+  		var visible = Boolean($this.val());
+  		$this.siblings('.form-control-clear').toggleClass('hidden', !visible);
+	}).trigger('propertychange');
+
+	$('.form-control-clear').click(function() {
+	  $(this).siblings('input[type="text"]').val('')
+	    .trigger('propertychange').focus();
+	});
+
+ 	$('input.groupaccess').on('change', function(e) {
  	 	var check = $(this).attr('checked');
  	 	var url = '#';
 
@@ -159,10 +170,12 @@ $(document).ready(function() {
  	 	});
  	 });
 
+	// TODO: Update to modal event
 	$("#newmeeting").on('shown.bs.collapse', function(e) {
 		$("#mname")[0].focus();
 	});
 
+	// TODO: Update to modal event
 	$("#newmember").on('shown.bs.collapse', function(e) {
 		$("#namesearch")[0].focus();
 	});

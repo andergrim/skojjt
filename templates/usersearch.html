@@ -1,0 +1,37 @@
+<div class="modal fade" id="modal-usersearch" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        		<h4 class="modal-title">Lägg till avdelningsmedlem</h4>
+      		</div>
+
+      		<div class="modal-body" id="newmember">
+
+      			<p class="discrete">
+      				Du kan lägga till en befintlig medlem till denna avdelning eller göra en tillfällig registrering av en person som inte finns i Scoutnet ännu.
+      			</p>
+
+				<div id="scrollable-dropdown-menu">
+					<div class="input-group">
+						<div class="form-group has-feedback has-clear">
+							<input id="namesearch" class="form-control" type="text" placeholder="Sök medlem" autocomplete="off"/>
+							<span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+						</div>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-primary" id="searchButton">Sök</button>
+						</span>
+					</div>
+					<div id="nameResults"></div>
+				</div>
+
+				<hr/>
+
+				<a href="newperson" class="btn btn-primary">
+					<span class="glyphicon glyphicon-user"></span>
+					Registrera ny person
+				</a>
+			</div>
+    	</div>
+  	</div>
+</div>
