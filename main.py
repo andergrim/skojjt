@@ -566,12 +566,23 @@ def persons(sgroup_url=None, person_url=None, action=None):
 			session = session)
 	elif person==None:
 		section_title = 'Personer'
-		return render_template('index.html',
+		
+		items = Person.query(Person.scoutgroup == sgroup_key).order(Person.firstname, Person.lastname).fetch(), # TODO: memcache
+		letters = []
+
+		for persons in items:
+			for person in persons:
+				letters.append(person.firstname[0])
+
+		letters = sorted(set(letters))
+
+		return render_template('memberlist.html',
 			heading = section_title,
 			baselink = baselink,
-			items = Person.query(Person.scoutgroup == sgroup_key).order(Person.firstname, Person.lastname).fetch(), # TODO: memcache
+			items = items,
 			breadcrumbs = breadcrumbs,
 			username = user.getname(),
+			letters = letters,
 			env = env,
 			session = session)
 	else:

@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block main %}
+<h2>{{tabletitle}}</h2>
+<div class="row">
+	
+	<nav class="col-xs-1 index-sidebar">
+		<ul id="sidebar" class="nav nav-stacked fixed">
+			{% for letter in letters %}
+			<li>
+				<a href="#letter_{{ letter }}">
+					{{ letter }}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</nav>
+
+	<div class="col-xs-11">
+		
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>{{rowtitle}}</th>
+					</tr>
+			  	</thead>
+				<tbody>
+					{% for item in items[0] %}
+					{% set first_letter = item.firstname[0] %}
+					<tr>
+						<td>
+							<a {% if first_letter != last_letter %}id="letter_{{ first_letter }}"{% endif %}
+							   href="{{baselink+item.key.urlsafe()}}/">
+								{{ item.getname() }}
+							</a>
+						</td>
+					</tr>
+					{% set last_letter = item.firstname[0] %}
+					{% endfor %}
+			 	</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

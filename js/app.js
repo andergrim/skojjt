@@ -1,5 +1,14 @@
 
 $(document).ready(function() {
+	/* Index sidebar */
+	if ($('#sidebar').length > 0) {
+		console.log('sidebar');
+		$('body').scrollspy({
+   			target: '.index-sidebar',
+    		offset: 60
+		});
+	}
+
 	/* Troop page functions */
 	if ($('#page-troop').length > 0) {
 		var maintable = $('#maintable');
@@ -170,14 +179,12 @@ $(document).ready(function() {
  	 	});
  	 });
 
-	// TODO: Update to modal event
-	$("#newmeeting").on('shown.bs.collapse', function(e) {
-		$("#mname")[0].focus();
+	$("#modal-meetingform").on('shown.bs.modal', function(e) {
+		$("#mname").focus();
 	});
 
-	// TODO: Update to modal event
-	$("#newmember").on('shown.bs.collapse', function(e) {
-		$("#namesearch")[0].focus();
+	$("#modal-usersearch").on('shown.bs.modal', function(e) {
+		$("#namesearch").focus();
 	});
 
 	$(".postattendance").click(function(event) {

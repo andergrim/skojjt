@@ -9,6 +9,7 @@
   white-space: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  padding-right: 2px;
 }
 
 .navbar {
@@ -21,6 +22,30 @@
   margin-bottom: 0 !important;
   margin-left: 0;
   margin-right: 6px;
+}
+
+/* Alphabetic index sidebar */
+.fixed {
+  position: fixed;
+}
+
+.index-sidebar {
+  padding-left: 5px;
+}
+
+.index-sidebar .nav > li > a {
+  color: #000;
+  padding: 2px 8px;
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.index-sidebar .nav > li.active > a,
+.index-sidebar .nav > li > a:hover,
+.index-sidebar .nav > li > a:focus {
+  color: #003c69;
+  background-color: #ccc;
+  font-weight: 800;
 }
 
 /* Page layouts */
