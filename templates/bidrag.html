@@ -1,0 +1,22 @@
+<div class="modal fade" id="modal-bidrag" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        		<h4 class="modal-title">Bidrag</h4>
+      		</div>
+      		<div class="modal-body" id="bidrag">
+				<table id="allowance" class="table table-striped display nowrap">
+					<thead>
+						<tr><th>Bidrag</th><th>&nbsp;</th></tr>
+					</thead>
+					<tbody id="allowanceinfo">
+						{% for a in allowance %}
+						<tr><td>{{ a['name'] }}</td><td>{{ a['value'] }}</td></tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+    	</div>
+  	</div>
+</div>
