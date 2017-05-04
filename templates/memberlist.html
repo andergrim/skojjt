@@ -27,10 +27,10 @@
 				<tbody>
 					{% for item in items[0] %}
 					{% set first_letter = item.firstname[0] %}
-					<tr class="{% if item.troop == None %}danger{% elif item.notInScoutnet %}warning{% endif %}">
+					<tr {% if first_letter != last_letter %}id="letter_{{ first_letter }}"{% endif %} 
+						class="{% if item.troop == None %}danger{% elif item.notInScoutnet %}warning{% endif %}">
 						<td>
-							<a {% if first_letter != last_letter %}id="letter_{{ first_letter }}"{% endif %}
-							   href="{{baselink+item.key.urlsafe()}}/">
+							<a href="{{baselink+item.key.urlsafe()}}/">
 								{{ item.getname() }}
 							</a>
 							{% if item.troop == None %}
