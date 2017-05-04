@@ -213,7 +213,7 @@ def start(sgroup_url=None, troop_url=None, key_url=None):
 				raise ValueError('Missing troop or person')
 			person_key = ndb.Key(urlsafe=key_url)
 			person = person_key.get()
-			logging.info("adding person=%s to troop=%d", person.getname(), troop.getname())
+			logging.info("adding person=%s to troop=%s", person.getname(), troop.getname())
 			troopperson = TroopPerson.create(troop_key, person_key, person.isLeader())
 			troopperson.commit()
 			return redirect(breadcrumbs[-1]['link'])
@@ -586,10 +586,19 @@ def persons(sgroup_url=None, person_url=None, action=None):
 			env = env,
 			session = session)
 	else:
+		troops = Troop.getTroopsForUser(sgroup_key, user)
+		available_troops = []
+		
+		for troop in troops:
+			available_troops.append([troop.key.string_id(),
+				troop.name, 
+				'/start/' + scoutgroup.key.urlsafe() + '/' + troop.key.urlsafe() + '/' + person.key.urlsafe()+'?action=addperson'])
+
 		return render_template('person.html',
 			heading = section_title,
 			baselink = '/persons/' + scoutgroup.key.urlsafe() + '/',
-			trooppersons = TroopPerson.query(TroopPerson.person == person.key).fetch(), # TODO: memcache
+			trooppersons = TroopPerson.query(TroopPerson.person == person.key).fetch(), # TODO: memcache,
+			available_troops = available_troops,
 			ep = person,
 			scoutgroup = scoutgroup,
 			breadcrumbs = breadcrumbs,

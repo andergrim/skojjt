@@ -151,6 +151,11 @@ $(document).ready(function() {
 	/***
 	 * Common event handlers
  	 ***/ 
+ 	$('.addToTroop').on('click', function(e) {
+ 		var troopName = $('#addToTroopName').val();
+ 		window.location = troopName;
+ 	});
+
  	$('.has-clear input[type="text"]').on('input propertychange', function() {
   		var $this = $(this);
   		var visible = Boolean($this.val());

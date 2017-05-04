@@ -6,7 +6,26 @@
 		<div class="container">
 			<form id="newperson" role="form" name="person" method="POST">
 				<input type="hidden" name="action" value="newperson"/>
-				<h2>{% if ep %}{{ ep.getname() }}{% else %}Registrera ny person{% endif %}</h2>
+				<h2>
+					{% if ep %}
+						{{ ep.getname() }}
+					{% else %}
+						Registrera ny person
+					{% endif %}
+				</h2>
+				
+				{% if ep.troop == None %}
+					<span class="label label-primary">Saknar avdelning</span>
+				{% endif %}
+				
+				{% if ep.notInScoutnet %}
+					<span class="label label-primary">Ej i Scoutnet</span>
+				{% endif %}
+
+				{% if ep.removed %}
+					<span class="label label-danger">Borttagen</span>
+				{% endif %}
+				
 				{% if ep %}
 				<p>
 					{% if ep.mobile != "" %}
@@ -22,12 +41,12 @@
 				{% endif %}
 
 				{% if (not hasPerson and not scoutgroup.canAddToWaitinglist()) or (hasPerson and ep.notInScoutnet) %}
-			  	<div class="well well-sm">
-			  		OBS! Personen kommer inte registreras i <a href="https://www.scoutnet.se/">Scoutnet</a> automatiskt!
+			  	<div class="alert alert-warning" role="alert">
+			  		OBS! Personen kommer inte registreras i <a class="alert-link" href="https://www.scoutnet.se/">Scoutnet</a> automatiskt!
 			  	</div>
 			  	{% endif %}
 
-				<div class="col-xs-12 col-sm-8 col-md-6">
+				<div class="col-xs-12 col-sm-6 col-md-6">
 					<div class="form-group">
 						<label for="firstname">Förnamn</label>
 						<input type="text" class="form-control" size='50' required="1" placeholder="Förnamn" name="firstname" id="firstname" value="{% if ep %}{{ep.firstname}}{% endif %}" {% if ep %}readonly="1"{% endif %}/>
@@ -72,40 +91,59 @@
 	 		
 	 		{% if hasPerson and ep.notInScoutnet %}
 				<div class="col-xs-12">
-					<em>OBS! Personen finns inte i scoutnet</em><br/>
 					{% if (ep.notInScoutnet and scoutgroup.canAddToWaitinglist()) %}
-					<a href="addtowaitinglist" class="btn btn-lg btn-default"> Lägg till i Scoutnets kölista </a> <br/>
-					<strong>Personen hamnar i scoutnet under "medlemmar som inte godkänts". Du måste godkänna i scoutnet, sätta avgift och avdelning.</strong>
+						<a href="addtowaitinglist" class="btn btn-default"> Lägg till i Scoutnets kölista </a>
 					{% endif %}
 
-					<div class="btn-toolbar">
 					{% if not ep.removed %}
-					  <a href="deleteperson" class="btn btn-lg btn-danger">Ta bort</a>
+						<a href="deleteperson" class="btn btn-danger" role="button">Ta bort</a>
 					{% else %}
-					  <em>Personen är borttagen</em><br/>
-					  <a href="addbackperson" class="btn btn-lg btn-danger">Lägg till igen</a>
+						<a href="addbackperson" class="btn btn-default" role="button">Lägg till igen</a>
 					{% endif %}
+
+					{% if (ep.notInScoutnet and scoutgroup.canAddToWaitinglist()) %}
+					<div class="well well-sm top-buffer-sm">
+						Om du lägger till personen  i Scoutnets väntelista kommer den att hamna under "Medlemmar som inte godkänts". Medlemsregistreraren måste godkänna medlemmen samt sätta avgift och avdelning.
 					</div>
+					{% endif %}
 				</div>
 			{% endif %}
 			
 			{% if hasPerson %}
-	        <label for="trooplist">Avdelningar</label>
-	        <div class="list-group col-xs-12 col-sm-8 col-md-6" id="trooplist">
-			    {% for tp in trooppersons %}
-			    <li class="list-group-item">
-					{% set troop = tp.troop.get() %}
-					{% set group_key = troop.scoutgroup %}
-					<h4 class="list-group-item-heading">
-						<a href="/start/{{group_key.urlsafe()}}/{{troop.key.urlsafe()}}/">{{tp.getFullTroopname()}}</a>
-						{% if tp.leader %} - Ledare{% endif %}
-					</h4>
+		        <label for="trooplist">Avdelningar</label>
+		        {% if trooppersons|length > 0 %}
+		        <div class="list-group col-xs-12 col-sm-6 col-md-6" id="trooplist">
+				    {% for tp in trooppersons %}
+				    <li class="list-group-item">
+						{% set troop = tp.troop.get() %}
+						{% set group_key = troop.scoutgroup %}
+						<h4 class="list-group-item-heading">
+							<a href="/start/{{group_key.urlsafe()}}/{{troop.key.urlsafe()}}/">{{tp.getFullTroopname()}}</a>
+							{% if tp.leader %} - Ledare{% endif %}
+						</h4>
 
-					<a href="removefromtroop?troop={{troop.key.urlsafe()}}" class="btn btn-sm btn-danger">Ta bort från avdelning</a>
-					{% if tp.leader %}<a href="removeasleader?troop={{troop.key.urlsafe()}}" class="btn btn-sm btn-danger">Ta bort som ledare</a>{% else %}<a href="setasleader?troop={{troop.key.urlsafe()}}" class="btn btn-sm btn-default">Gör till ledare</a>{% endif %}
-				</li>
-			    {% endfor %}
-			</div>
+						<a href="removefromtroop?troop={{troop.key.urlsafe()}}" class="btn btn-sm btn-danger">Ta bort från avdelning</a>
+						{% if tp.leader %}<a href="removeasleader?troop={{troop.key.urlsafe()}}" class="btn btn-sm btn-danger">Ta bort som ledare</a>{% else %}<a href="setasleader?troop={{troop.key.urlsafe()}}" class="btn btn-sm btn-default">Gör till ledare</a>{% endif %}
+					</li>
+				    {% endfor %}
+				</div>
+				{% endif %}
+
+				<div class="col-xs-12 form-inline">
+					<div class="form-group">
+						<select id="addToTroopName" class="form-control">
+							{% for troop in available_troops %}
+								<option {% for tp in trooppersons %}{% if tp.troop.string_id() == troop[0] %}disabled{% endif %}{% endfor %}
+									    value="{{ troop[2] }}">
+									{{ troop[1] }}
+								</option>
+							{% endfor %}
+						</select>
+					</div>
+					<button class="form-control addToTroop btn btn-primary">
+						Lägg till i avdelning
+					</button>
+				</div>
 			{% endif %}
 		</div><!-- end container -->
 	</div>
