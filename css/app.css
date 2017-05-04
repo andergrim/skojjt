@@ -231,3 +231,84 @@ td > div.checkbox {
 .radio label input[type="radio"]:disabled + .cr {
     opacity: .5;
 }
+
+/* Buffer helper classes */
+.top-buffer {
+  margin-top: 20px !important;
+}
+
+.top-buffer-xs {
+  margin-top: 5px !important;
+}
+
+.top-buffer-sm {
+  margin-top: 10px !important;
+}
+
+.top-buffer-lg {
+  margin-top: 40px !important;
+}
+
+.top-buffer-none {
+  margin-top: 0px !important;
+}
+
+.bottom-buffer {
+  margin-bottom: 20px !important;
+}
+
+.bottom-buffer-xs {
+  margin-bottom: 5px !important;
+}
+
+.bottom-buffer-sm {
+  margin-bottom: 10px !important;
+}
+
+.bottom-buffer-lg {
+  margin-bottom: 40px !important;
+}
+
+.bottom-buffer-none {
+  margin-bottom: 0px !important;
+}
+
+.left-buffer {
+  margin-left: 15px !important;
+}
+
+.left-buffer-xs {
+  margin-left: 4px !important;
+}
+
+.left-buffer-sm {
+  margin-left: 8px !important;
+}
+
+.left-buffer-lg {
+  margin-left: 30px !important;
+}
+
+.left-buffer-none {
+  margin-left: 0px !important;
+}
+
+.right-buffer {
+  margin-right: 15px !important;
+}
+
+.right-buffer-xs {
+  margin-right: 4px !important;
+}
+
+.right-buffer-sm {
+  margin-right: 8px !important;
+}
+
+.right-buffer-lg {
+  margin-right: 30px !important;
+}
+
+.right-buffer-none {
+  margin-right: 0px !important;
+}
